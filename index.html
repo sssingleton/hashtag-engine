@@ -714,7 +714,7 @@
         Your key is saved to your browser only — we never store it.
       </div>
       <div class="modal-input-row">
-        <input type="password" class="modal-input" id="modalApiKey" placeholder="YOUR_KEY_HERE
+        <input type="password" class="modal-input" id="modalApiKey" placeholder="sk-ant-api03-..." autocomplete="off">
         <button class="modal-save-btn" onclick="saveKey()">Save</button>
       </div>
       <div class="modal-status" id="modalStatus"></div>
@@ -741,7 +741,7 @@
           <div class="guide-step"><span class="guide-step-num">01</span><span>Go to <strong>console.anthropic.com</strong> and create a free account.</span></div>
           <div class="guide-step"><span class="guide-step-num">02</span><span>Go to <strong>Settings → Billing</strong> and add a card. Load $5–$10 to start.</span></div>
           <div class="guide-step"><span class="guide-step-num">03</span><span>Go to <strong>API Keys</strong> in the sidebar → <strong>Create Key</strong>. Name it anything.</span></div>
-          <div class="guide-step"><span class="guide-step-num">04</span><span>Copy the key immediately — you only see it once. It starts with <strong>YOUR_KEY_HERE
+          <div class="guide-step"><span class="guide-step-num">04</span><span>Copy the key immediately — you only see it once. It starts with <strong>sk-ant-</strong></span></div>
           <div class="guide-step"><span class="guide-step-num">05</span><span>Paste it in the field above and hit <strong>Save</strong>. Done.</span></div>
         </div>
         <div class="guide-note">Never share your key publicly. If it gets exposed, revoke it at console.anthropic.com and generate a new one.</div>
@@ -995,8 +995,8 @@
   function saveKey() {
     const key = document.getElementById('modalApiKey').value.trim();
     const status = document.getElementById('modalStatus');
-    if (!key.startsWith('YOUR_KEY_HERE')) {
-      status.textContent = '✗ Invalid key format — should start with YOUR_KEY_HERE';
+    if (!key.startsWith('sk-ant-')) {
+      status.textContent = '✗ Invalid key format — should start with sk-ant-';
       status.className = 'modal-status err';
       return;
     }
