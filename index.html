@@ -62,7 +62,190 @@
     margin-top: 8px;
   }
 
-  /* API Key section removed — key hardcoded */
+  /* API Key Banner */
+  .key-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    margin-bottom: 32px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .key-banner:hover { border-color: var(--border-active); }
+
+  .key-banner.has-key {
+    border-color: rgba(200, 241, 53, 0.3);
+  }
+
+  .key-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .key-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--error);
+    flex-shrink: 0;
+  }
+
+  .key-dot.active { background: var(--accent); }
+
+  .key-banner-text {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .key-banner-text.no-key { color: var(--error); }
+  .key-banner-text.has-key { color: var(--accent); }
+
+  .key-banner-action {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    padding: 24px;
+  }
+
+  .modal-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border-active);
+    width: 100%;
+    max-width: 500px;
+    padding: 32px;
+    transform: translateY(8px);
+    transition: transform 0.2s;
+  }
+
+  .modal-overlay.visible .modal {
+    transform: translateY(0);
+  }
+
+  .modal-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .modal-title span { color: var(--accent); }
+
+  .modal-subtitle {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .modal-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .modal-input {
+    flex: 1;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    letter-spacing: 1px;
+  }
+
+  .modal-input:focus { border-color: var(--accent); }
+
+  .modal-save-btn {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 11px 20px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+
+  .modal-save-btn:hover { opacity: 0.85; }
+
+  .modal-status {
+    font-size: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    min-height: 16px;
+  }
+
+  .modal-status.ok { color: var(--accent); }
+  .modal-status.err { color: var(--error); }
+
+  .modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+  }
+
+  .modal-guide-link {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .modal-guide-link:hover { color: var(--accent); }
+
+  .modal-close {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'DM Mono', monospace;
+    transition: color 0.2s;
+  }
+
+  .modal-close:hover { color: var(--text); }
 
   /* Form */
   .form-grid {
@@ -412,8 +595,97 @@
     letter-spacing: 1px;
   }
 
-  .char-count.warn { color: var(--error); }
-</style>
+  /* Guide panel */
+  .guide-toggle {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 10px 0;
+    border-top: 1px solid var(--border);
+    transition: color 0.2s;
+    user-select: none;
+  }
+
+  .guide-toggle:hover { color: var(--accent); }
+
+  .guide-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+
+  .guide-panel.open {
+    max-height: 600px;
+  }
+
+  .guide-section {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .guide-section-title {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .guide-section-body {
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+  }
+
+  .guide-steps {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .guide-step-title {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .guide-step {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-size: 10px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  .guide-step-num {
+    color: var(--accent);
+    font-size: 9px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    width: 18px;
+  }
+
+  .guide-step strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .guide-note {
+    font-size: 9px;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+    line-height: 1.6;
+    padding: 10px 0 4px;
+    font-style: italic;
+  }
+
+
 </head>
 <body>
 
@@ -422,6 +694,64 @@
   <div class="header">
     <h1>TAG<span>.</span>ENGINE</h1>
     <p>Platform-native hashtags & SEO keywords — powered by AI</p>
+  </div>
+
+  <!-- API Key Banner -->
+  <div class="key-banner" id="keyBanner" onclick="openModal()">
+    <div class="key-banner-left">
+      <div class="key-dot" id="keyDot"></div>
+      <span class="key-banner-text no-key" id="keyBannerText">API key required — tool will not work without it</span>
+    </div>
+    <span class="key-banner-action" id="keyBannerAction">Add Key →</span>
+  </div>
+
+  <!-- API Key Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-title">API<span>.</span>KEY</div>
+      <div class="modal-subtitle">
+        Tag Engine uses your personal Anthropic API key to generate results.<br>
+        Your key is saved to your browser only — we never store it.
+      </div>
+      <div class="modal-input-row">
+        <input type="password" class="modal-input" id="modalApiKey" placeholder="sk-ant-api03-..." autocomplete="off">
+        <button class="modal-save-btn" onclick="saveKey()">Save</button>
+      </div>
+      <div class="modal-status" id="modalStatus"></div>
+
+      <!-- Inline guide -->
+      <div class="guide-toggle" onclick="toggleGuide()">
+        <span id="guideToggleText">↓ How to get a key</span>
+      </div>
+      <div class="guide-panel" id="guidePanel">
+        <div class="guide-section">
+          <div class="guide-section-title">What is an API key?</div>
+          <div class="guide-section-body">Tag Engine is powered by Claude — an AI made by Anthropic. To use it, you connect your own Anthropic account via an API key. Think of it as a personal access pass. Your key stays in your browser and is never shared.</div>
+        </div>
+        <div class="guide-section">
+          <div class="guide-section-title">Why not use a shared key?</div>
+          <div class="guide-section-body">Using your own key means you only pay for what you use, your usage stays private, and the tool stays free to share with no one footing the bill for everyone else.</div>
+        </div>
+        <div class="guide-section">
+          <div class="guide-section-title">What does it cost?</div>
+          <div class="guide-section-body">Each generation costs roughly $0.006 — less than one cent. You can run it 1,000 times for about $6. No subscription. Pay-as-you-go only.</div>
+        </div>
+        <div class="guide-steps">
+          <div class="guide-step-title">How to get your key — 5 steps</div>
+          <div class="guide-step"><span class="guide-step-num">01</span><span>Go to <strong>console.anthropic.com</strong> and create a free account.</span></div>
+          <div class="guide-step"><span class="guide-step-num">02</span><span>Go to <strong>Settings → Billing</strong> and add a card. Load $5–$10 to start.</span></div>
+          <div class="guide-step"><span class="guide-step-num">03</span><span>Go to <strong>API Keys</strong> in the sidebar → <strong>Create Key</strong>. Name it anything.</span></div>
+          <div class="guide-step"><span class="guide-step-num">04</span><span>Copy the key immediately — you only see it once. It starts with <strong>sk-ant-</strong></span></div>
+          <div class="guide-step"><span class="guide-step-num">05</span><span>Paste it in the field above and hit <strong>Save</strong>. Done.</span></div>
+        </div>
+        <div class="guide-note">Never share your key publicly. If it gets exposed, revoke it at console.anthropic.com and generate a new one.</div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="https://console.anthropic.com" target="_blank" class="modal-guide-link">→ Open console.anthropic.com</a>
+        <button class="modal-close" onclick="closeModal()">Close</button>
+      </div>
+    </div>
   </div>
 
   <!-- Form -->
@@ -452,28 +782,11 @@
     <div class="two-col">
       <div class="field">
         <span class="field-label">Content Type</span>
-        <select class="select-input" id="contentType">
-          <option value="video">Video</option>
-          <option value="photo">Photo / Image</option>
-          <option value="reel">Reel / Short</option>
-          <option value="blog">Blog / Article</option>
-          <option value="release">Music Release</option>
-          <option value="podcast">Podcast</option>
-        </select>
+        <select class="select-input" id="contentType"></select>
       </div>
       <div class="field">
         <span class="field-label">Vibe / Aesthetic</span>
-        <select class="select-input" id="vibe">
-          <option value="trending">Trending</option>
-          <option value="niche">Niche / Underground</option>
-          <option value="educational">Educational</option>
-          <option value="promotional">Promotional</option>
-          <option value="lifestyle">Lifestyle</option>
-          <option value="entertainment">Entertainment</option>
-          <option value="moody">Moody / Aesthetic</option>
-          <option value="inspirational">Inspirational</option>
-          <option value="behind-the-scenes">Behind the Scenes</option>
-        </select>
+        <select class="select-input" id="vibe"></select>
       </div>
     </div>
 
@@ -516,7 +829,98 @@
   let selectedIntent = 'reach';
   let lastOutputText = '';
 
-  const intentDescriptions = {
+  const platformContentTypes = {
+    instagram: [
+      { value: 'post', label: 'Photo Post' },
+      { value: 'reel', label: 'Reel' },
+      { value: 'carousel', label: 'Carousel' },
+      { value: 'story', label: 'Story' },
+      { value: 'live', label: 'Live' },
+      { value: 'music-release', label: 'Music Release' },
+    ],
+    tiktok: [
+      { value: 'video', label: 'Video' },
+      { value: 'duet', label: 'Duet' },
+      { value: 'stitch', label: 'Stitch' },
+      { value: 'live', label: 'Live' },
+      { value: 'series', label: 'Series' },
+      { value: 'music-release', label: 'Music Release' },
+    ],
+    youtube: [
+      { value: 'video', label: 'Long-form Video' },
+      { value: 'short', label: 'YouTube Short' },
+      { value: 'podcast', label: 'Podcast' },
+      { value: 'live', label: 'Live Stream' },
+      { value: 'community', label: 'Community Post' },
+      { value: 'music-release', label: 'Music Release / Visualizer' },
+    ],
+    google: [
+      { value: 'blog', label: 'Blog / Article' },
+      { value: 'product', label: 'Product Page' },
+      { value: 'landing', label: 'Landing Page' },
+      { value: 'press', label: 'Press Release' },
+      { value: 'podcast', label: 'Podcast Episode' },
+      { value: 'music-release', label: 'Artist / Release Page' },
+    ],
+  };
+
+  const platformVibes = {
+    instagram: [
+      { value: 'trending', label: 'Trending' },
+      { value: 'aesthetic', label: 'Aesthetic / Moody' },
+      { value: 'lifestyle', label: 'Lifestyle' },
+      { value: 'behind-the-scenes', label: 'Behind the Scenes' },
+      { value: 'promotional', label: 'Promotional' },
+      { value: 'inspirational', label: 'Inspirational' },
+      { value: 'niche', label: 'Niche / Underground' },
+    ],
+    tiktok: [
+      { value: 'trending', label: 'Trending / Viral' },
+      { value: 'entertainment', label: 'Entertainment' },
+      { value: 'educational', label: 'Educational / Tips' },
+      { value: 'behind-the-scenes', label: 'Behind the Scenes' },
+      { value: 'reaction', label: 'Reaction / Commentary' },
+      { value: 'niche', label: 'Niche Community' },
+      { value: 'promotional', label: 'Promotional' },
+    ],
+    youtube: [
+      { value: 'educational', label: 'Educational / How-to' },
+      { value: 'entertainment', label: 'Entertainment' },
+      { value: 'documentary', label: 'Documentary / Story' },
+      { value: 'review', label: 'Review / Commentary' },
+      { value: 'behind-the-scenes', label: 'Behind the Scenes' },
+      { value: 'promotional', label: 'Promotional' },
+      { value: 'niche', label: 'Niche / Deep Dive' },
+    ],
+    google: [
+      { value: 'informational', label: 'Informational' },
+      { value: 'commercial', label: 'Commercial / Sales' },
+      { value: 'navigational', label: 'Brand / Navigational' },
+      { value: 'educational', label: 'Educational / How-to' },
+      { value: 'news', label: 'News / Announcement' },
+      { value: 'local', label: 'Local / Geographic' },
+    ],
+  };
+
+  const platformPlaceholders = {
+    instagram: 'e.g. moody fall aesthetic, new indie pop single, Nashville artist, melancholic sound...',
+    tiktok: 'e.g. day in the life of a music producer, beat making process, new song snippet...',
+    youtube: 'e.g. full studio session vlog, how I made this beat, new single breakdown...',
+    google: 'e.g. indie music producer Nashville, custom beat production, music licensing services...',
+  };
+
+  function populateDropdowns(platform) {
+    const contentSel = document.getElementById('contentType');
+    const vibeSel = document.getElementById('vibe');
+    const topic = document.getElementById('topic');
+
+    const types = platformContentTypes[platform] || [];
+    const vibes = platformVibes[platform] || [];
+
+    contentSel.innerHTML = types.map(t => `<option value="${t.value}">${t.label}</option>`).join('');
+    vibeSel.innerHTML = vibes.map(v => `<option value="${v.value}">${v.label}</option>`).join('');
+    topic.placeholder = platformPlaceholders[platform] || '';
+  }
     instagram: {
       reach: 'Broad + trending hashtags to surface in Explore and discovery feeds.',
       engagement: 'Niche community tags that drive saves, comments, and loyal audience interaction.'
@@ -539,14 +943,83 @@
   const API_KEY = 'YOUR_KEY_HERE';
 
   window.onload = () => {
+    populateDropdowns('instagram');
     updateIntentDesc();
+    updateBanner();
   };
+
+  function getKey() {
+    if (API_KEY && API_KEY !== 'YOUR_KEY_HERE') return API_KEY;
+    return localStorage.getItem('tag_engine_key') || '';
+  }
+
+  function updateBanner() {
+    const key = getKey();
+    const banner = document.getElementById('keyBanner');
+    const dot = document.getElementById('keyDot');
+    const text = document.getElementById('keyBannerText');
+    const action = document.getElementById('keyBannerAction');
+    if (key) {
+      banner.classList.add('has-key');
+      dot.classList.add('active');
+      text.className = 'key-banner-text has-key';
+      text.textContent = 'API key configured — ready to generate';
+      action.textContent = 'Change Key →';
+    } else {
+      banner.classList.remove('has-key');
+      dot.classList.remove('active');
+      text.className = 'key-banner-text no-key';
+      text.textContent = 'API key required — tool will not work without it';
+      action.textContent = 'Add Key →';
+    }
+  }
+
+  function openModal() {
+    const overlay = document.getElementById('modalOverlay');
+    const input = document.getElementById('modalApiKey');
+    const saved = localStorage.getItem('tag_engine_key');
+    if (saved) input.value = saved;
+    overlay.classList.add('visible');
+    setTimeout(() => input.focus(), 100);
+  }
+
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('visible');
+    document.getElementById('modalStatus').textContent = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) closeModal();
+  }
+
+  function saveKey() {
+    const key = document.getElementById('modalApiKey').value.trim();
+    const status = document.getElementById('modalStatus');
+    if (!key.startsWith('sk-ant-')) {
+      status.textContent = '✗ Invalid key format — should start with sk-ant-';
+      status.className = 'modal-status err';
+      return;
+    }
+    localStorage.setItem('tag_engine_key', key);
+    status.textContent = '✓ Key saved — you\'re ready to generate';
+    status.className = 'modal-status ok';
+    updateBanner();
+    setTimeout(() => closeModal(), 1200);
+  }
 
   function selectPlatform(el) {
     document.querySelectorAll('.platform-tab').forEach(t => t.classList.remove('active'));
     el.classList.add('active');
     selectedPlatform = el.dataset.platform;
+    populateDropdowns(selectedPlatform);
     updateIntentDesc();
+  }
+
+  function toggleGuide() {
+    const panel = document.getElementById('guidePanel');
+    const toggleText = document.getElementById('guideToggleText');
+    const isOpen = panel.classList.toggle('open');
+    toggleText.textContent = isOpen ? '↑ Hide guide' : '↓ How to get a key';
   }
 
   function selectIntent(el) {
@@ -617,10 +1090,10 @@ Generate the optimal ${selectedPlatform === 'google' ? 'SEO keywords' : selected
   }
 
   async function generate() {
-    const apiKey = API_KEY;
+    const apiKey = getKey();
 
-    if (!apiKey || apiKey === 'YOUR_KEY_HERE') {
-      showError('API key not configured. Add your key to the API_KEY constant in the source file.');
+    if (!apiKey) {
+      openModal();
       return;
     }
 
