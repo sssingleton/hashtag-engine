@@ -909,18 +909,7 @@
     google: 'e.g. indie music producer Nashville, custom beat production, music licensing services...',
   };
 
-  function populateDropdowns(platform) {
-    const contentSel = document.getElementById('contentType');
-    const vibeSel = document.getElementById('vibe');
-    const topic = document.getElementById('topic');
-
-    const types = platformContentTypes[platform] || [];
-    const vibes = platformVibes[platform] || [];
-
-    contentSel.innerHTML = types.map(t => `<option value="${t.value}">${t.label}</option>`).join('');
-    vibeSel.innerHTML = vibes.map(v => `<option value="${v.value}">${v.label}</option>`).join('');
-    topic.placeholder = platformPlaceholders[platform] || '';
-  }
+  const intentDescriptions = {
     instagram: {
       reach: 'Broad + trending hashtags to surface in Explore and discovery feeds.',
       engagement: 'Niche community tags that drive saves, comments, and loyal audience interaction.'
@@ -939,7 +928,20 @@
     }
   };
 
-  // API key — hardcoded, private repo only
+  function populateDropdowns(platform) {
+    const contentSel = document.getElementById('contentType');
+    const vibeSel = document.getElementById('vibe');
+    const topic = document.getElementById('topic');
+
+    const types = platformContentTypes[platform] || [];
+    const vibes = platformVibes[platform] || [];
+
+    contentSel.innerHTML = types.map(t => `<option value="${t.value}">${t.label}</option>`).join('');
+    vibeSel.innerHTML = vibes.map(v => `<option value="${v.value}">${v.label}</option>`).join('');
+    topic.placeholder = platformPlaceholders[platform] || '';
+  }
+
+  // API key — set to YOUR_KEY_HERE for public/GitHub version
   const API_KEY = 'YOUR_KEY_HERE';
 
   window.onload = () => {
@@ -1159,7 +1161,6 @@ Generate the optimal ${selectedPlatform === 'google' ? 'SEO keywords' : selected
     outputBox.innerHTML = '';
 
     if (selectedPlatform === 'instagram' || selectedPlatform === 'tiktok') {
-      // Hashtag cloud
       const tags = text.trim().split(/\s+/).filter(t => t.startsWith('#'));
       const container = document.createElement('div');
       container.className = 'output-tags';
@@ -1173,7 +1174,6 @@ Generate the optimal ${selectedPlatform === 'google' ? 'SEO keywords' : selected
       outputBox.appendChild(container);
 
     } else if (selectedPlatform === 'youtube') {
-      // Two sections: tags + keyword phrases
       const tagsMatch = text.match(/TAGS?:([\s\S]*?)(?:KEYWORD PHRASES?:|$)/i);
       const phrasesMatch = text.match(/KEYWORD PHRASES?:([\s\S]*?)$/i);
 
@@ -1217,7 +1217,6 @@ Generate the optimal ${selectedPlatform === 'google' ? 'SEO keywords' : selected
       }
 
     } else if (selectedPlatform === 'google') {
-      // Keyword phrases
       const block = document.createElement('div');
       block.className = 'output-section-block';
       const label = document.createElement('div');
